@@ -1124,7 +1124,7 @@
     "lodash" "^4.17.15"
     "write-file-atomic" "^2.3.0"
 
-"@expo/vector-icons@^12.0.0":
+"@expo/vector-icons@^12.0.0", "@expo/vector-icons@^12.0.2":
   "integrity" "sha512-VJZDyMvSzgZrIKeytBcxZ7Ll0iBDBAXaVLVR7nMgmhAPERnxdbqUfP6/wrxl6tETzRnG0Xzu9d64jcQRtechlg=="
   "resolved" "https://registry.yarnpkg.com/@expo/vector-icons/-/vector-icons-12.0.2.tgz"
   "version" "12.0.2"
