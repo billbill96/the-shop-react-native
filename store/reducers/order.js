@@ -2,7 +2,7 @@ import Order from '../../models/order';
 import { ADD_ORDER } from '../actions/order';
 
 const initialSate = {
-    order: []
+    orders: []
 };
 
 export default (state = initialSate, action) => {
