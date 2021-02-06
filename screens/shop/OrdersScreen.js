@@ -21,6 +21,7 @@ const OrdersScreen = props => {
                                                                 hour: '2-digit',
                                                                 minute: '2-digit'
                                                             })}
+                    item={itemData.item.items}
                     />}
             />
 };
