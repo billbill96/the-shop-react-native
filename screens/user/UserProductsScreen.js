@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Button, Platform } from 'react-native';
+import { FlatList, Button, Platform, Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
@@ -12,6 +12,19 @@ const UserProductsScreen = props => {
     const userProducts = useSelector(state => state.products.userProducts);
     const dispatch = useDispatch();
 
+    const editProductHandler = (id) => {
+        props.navigation.navigate('EditProduct', { productId: id });
+    };
+
+    const deleteHandler = (id) => {
+        Alert.alert('Are you sure?', 'Do you really wat to delete this item?',[
+            {text: 'No', style: 'default'},
+            {text: 'Yes', style: 'destructive', onPress: () => {
+                dispatch(productsActions.deleteProduct(id))
+            }}
+        ])
+    };
+
     return <FlatList 
                 data={userProducts} 
                 keyExtractor={item => item.id} 
@@ -21,19 +34,20 @@ const UserProductsScreen = props => {
                             title={itemData.item.title}
                             price={itemData.item.price}
                             onSelect={() => {
-
+                                editProductHandler(itemData.item.id)
                             }}
                         >
                         <Button 
                             color={Colors.primary} 
                             title='Edit' 
-                            onPress={() => {}}/>
+                            onPress={() => {
+                                console.log("edittttt " + itemData.item.id)
+                                editProductHandler(itemData.item.id)
+                            }}/>
                         <Button 
                             color={Colors.primary} 
                             title='Delete' 
-                            onPress={() => {
-                                dispatch(productsActions.deleteProduct(itemData.item.id))
-                            }} /> 
+                            onPress={deleteHandler.bind(this, itemData.item.id)} /> 
                     </ProductItem>
             } />
 };
@@ -41,14 +55,24 @@ const UserProductsScreen = props => {
 UserProductsScreen.navigationOptions = navData => {
     return {
         headerTitle: 'Your Products',
-        headerLeft: 
+        headerLeft: (
             <HeaderButtons HeaderButtonComponent={HeaderButton}>
                 <Item title='Menu' 
                     iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'} 
                     onPress={() => {
                         navData.navigation.toggleDrawer();
                     }}/> 
-            </HeaderButtons>    
+            </HeaderButtons> 
+        ),
+        headerRight: (
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item title='ADD' 
+                    iconName={Platform.OS === 'android' ? 'md-create' : 'ios-create'} 
+                    onPress={() => {
+                        navData.navigation.navigate('EditProduct');
+                    }}/> 
+            </HeaderButtons> 
+        )
     }
 };
 
